@@ -6,6 +6,6 @@ package com.tianci;
  */
 public class GitTest {
     public void test() {
-        System.out.println("Git first test use IDEA.");
+        System.out.println("Git first test use idea.");
     }
 }
