@@ -8,5 +8,6 @@ public class GitTest {
     public void test() {
         System.out.println("Git first test use idea.");
         System.out.println("master action");
+        System.out.println("dev action");
     }
 }
