@@ -3,7 +3,7 @@ package com.tianci.service.Impl;
 import com.tianci.dataobject.OrderDetail;
 import com.tianci.dto.OrderDTO;
 import com.tianci.enums.OrderStatusEnum;
-import com.tianci.enums.PayStautsEnum;
+import com.tianci.enums.PayStatusEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
@@ -92,7 +92,7 @@ public class OrderServiceImplTest {
     public void paid() {
         OrderDTO orderDTO  = orderService.findByOrderId(ORDER_ID);
         OrderDTO result = orderService.paid(orderDTO);
-        Assert.assertEquals(PayStautsEnum.SUCCESS.getCode(), result.getPayStatus());
+        Assert.assertEquals(PayStatusEnum.SUCCESS.getCode(), result.getPayStatus());
     }
 
     @Test

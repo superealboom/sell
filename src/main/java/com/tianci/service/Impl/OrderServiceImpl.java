@@ -7,7 +7,7 @@ import com.tianci.dataobject.ProductInfo;
 import com.tianci.dto.CartDTO;
 import com.tianci.dto.OrderDTO;
 import com.tianci.enums.OrderStatusEnum;
-import com.tianci.enums.PayStautsEnum;
+import com.tianci.enums.PayStatusEnum;
 import com.tianci.enums.ResultEnum;
 import com.tianci.exception.SellException;
 import com.tianci.repository.OrderDetailRepository;
@@ -84,7 +84,7 @@ public class OrderServiceImpl implements OrderService {
         BeanUtils.copyProperties(orderDTO, orderMaster);
         orderMaster.setOrderAmount(orderAmount);
         orderMaster.setOrderStatus(OrderStatusEnum.NEW.getCode());
-        orderMaster.setPayStatus(PayStautsEnum.WAIT.getCode());
+        orderMaster.setPayStatus(PayStatusEnum.WAIT.getCode());
         orderMasterRepository.save(orderMaster);
 
         //4. 扣库存
@@ -152,7 +152,7 @@ public class OrderServiceImpl implements OrderService {
         productService.increaseStock(cartDTOList);
 
         //如果已支付，需要退款
-        if (orderDTO.getPayStatus().equals(PayStautsEnum.SUCCESS.getCode())) {
+        if (orderDTO.getPayStatus().equals(PayStatusEnum.SUCCESS.getCode())) {
             payService.refund(orderDTO);
         }
         return orderDTO;
@@ -192,13 +192,13 @@ public class OrderServiceImpl implements OrderService {
         }
 
         //判断支付状态
-        if(!orderDTO.getPayStatus().equals(PayStautsEnum.WAIT.getCode())) {
+        if(!orderDTO.getPayStatus().equals(PayStatusEnum.WAIT.getCode())) {
             log.error("【订单支付成功】 订单支付状态不正确，orderId={},payStatus={}",orderDTO.getOrderId(),orderDTO.getPayStatus());
             throw new SellException(ResultEnum.ORDER_PAY_STATUS_ERROR);
         }
 
         //修改订单状态
-        orderDTO.setPayStatus(PayStautsEnum.SUCCESS.getCode());
+        orderDTO.setPayStatus(PayStatusEnum.SUCCESS.getCode());
         BeanUtils.copyProperties(orderDTO, orderMaster);
         OrderMaster updateResult = orderMasterRepository.save(orderMaster);
         if (updateResult == null) {
