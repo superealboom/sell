@@ -43,7 +43,7 @@ public class SellerOrderController {
         map.put("orderDTOPage", orderDTOPage);
         map.put("currentPage", page);
         map.put("size", size);
-        return new ModelAndView("/order/list",map);
+        return new ModelAndView("order/list",map);
     }
 
     /**
