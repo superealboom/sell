@@ -36,7 +36,7 @@
                                     <td>${orderDTO.createTime}</td>
                                     <td><a href="/sell/seller/order/detail?orderId=${orderDTO.orderId}">详情</a></td>
                                     <td>
-                                        <#if orderDTO.getOrderStatusEnum().message == "新订单">
+                                        <#if orderDTO.getOrderStatusEnum().message == "新下单">
                                             <a href="/sell/seller/order/cancel?orderId=${orderDTO.orderId}">取消</a>
                                         </#if>
                                     </td>
@@ -46,7 +46,7 @@
                             </table>
                         </div>
 
-                    <#--分页-->
+                        <#--分页-->
                         <div class="col-md-12 column">
                             <ul class="pagination pull-right">
                             <#if currentPage lte 1>
