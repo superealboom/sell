@@ -1,11 +1,13 @@
 package com.tianci.exception;
 
 import com.tianci.enums.ResultEnum;
+import lombok.Data;
 
 /**
  * Create by tianci
  * 2018/11/19 13:59
  */
+@Data
 public class SellException extends RuntimeException {
 
     private Integer code;

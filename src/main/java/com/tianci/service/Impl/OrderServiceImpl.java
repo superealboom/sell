@@ -12,9 +12,7 @@ import com.tianci.enums.ResultEnum;
 import com.tianci.exception.SellException;
 import com.tianci.repository.OrderDetailRepository;
 import com.tianci.repository.OrderMasterRepository;
-import com.tianci.service.OrderService;
-import com.tianci.service.PayService;
-import com.tianci.service.ProductService;
+import com.tianci.service.*;
 import com.tianci.utils.KeyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -50,6 +48,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private PayService payService;
+
+    @Autowired
+    private PushMessageService pushMessageService;
+
+    @Autowired
+    private WebSocket webSocket;
 
     @Override
     @Transactional
@@ -92,6 +96,10 @@ public class OrderServiceImpl implements OrderService {
                 .stream().map(e -> new CartDTO(e.getProductId(), e.getProductQuantity()))
                 .collect(Collectors.toList());
         productService.decreaseStock(cartDTOList);
+
+        //发送websocket消息
+        webSocket.sendMessage(orderDTO.getOrderId());
+
         return orderDTO;
     }
 
@@ -177,6 +185,9 @@ public class OrderServiceImpl implements OrderService {
             log.error("【完结订单】 更新失败，orderMaster={}", orderMaster);
             throw new SellException(ResultEnum.ORDER_UPDATE_FAIL);
         }
+
+        //推送微信模板消息
+        pushMessageService.orderStatus(orderDTO);
         return orderDTO;
     }
 
