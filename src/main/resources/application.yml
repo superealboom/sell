@@ -8,13 +8,26 @@ spring:
     show-sql: true
   jackson:
     default-property-inclusion: non_null
+  redis:
+    host: 192.168.56.101
+    port: 6379
 server:
   servlet:
     context-path: /sell
+
 wechat:
   mpAppId: wx425947f54e41a408
   mpAppSecret: dc1a51b6ef532bc84f099c53057311e6
+  openAppId: wx425947f54e41a408
+  openAppSecret: dc1a51b6ef532bc84f099c53057311e6
   mchId: 1309146202
   mchKey: c976503d34ca432c601361f969fd8d85
   keyPath: /var/weixin_cert/h5.p12
   notifyUrl: http://tianci.natapp1.cc/sell/pay/notify
+  templateId:
+    orderStatus: e-Cqq67QxD6YNI41iRiqawEYdFavW_7pc7LyEMb-yeQ
+
+ProjectUrl:
+  wechatMpAuthorize: http://tianci.natapp1.cc
+  wechatOpenAuthorize: http://tianci.natapp1.cc
+  sell: http://tianci.natapp1.cc
